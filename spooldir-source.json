@@ -1,0 +1,13 @@
+curl -X POST -H "Content-Type: application/json" --data '{
+  "name": "datagen-connector",
+  "config": {
+    "connector.class": "io.confluent.kafka.connect.datagen.DatagenConnector",
+    "quickstart": "users",
+    "kafka.topic": "test-topic",
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "false",
+    "max.interval": 1000,
+    "iterations": -1
+  }
+}' http://localhost:8083/connectors

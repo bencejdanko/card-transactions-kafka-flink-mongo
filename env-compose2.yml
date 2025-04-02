@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  jobmanager:
+    image: flink
+    container_name: jobmanager
+    hostname: jobmanager
+    ports:
+      - "8081:8081"
+    command: jobmanager
+    network_mode: "host"
+
+  taskmanager:
+    image: flink
+    container_name: taskmanager
+    hostname: taskmanager
+    depends_on:
+      - jobmanager
+    command: taskmanager
+    network_mode: "host"
+
+  sql-gateway:
+    image: flink
+    container_name: sql-gateway
+    hostname: sql-gateway
+    depends_on:
+      - jobmanager
+    command: standalone-job --job-classname org.apache.flink.table.gateway.SqlGateway
+    network_mode: "host"
